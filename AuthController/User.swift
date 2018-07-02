@@ -14,18 +14,3 @@ public protocol AuthControllerUser {
 	
 	var id:String { get }
 }
-
-// MARK: - Test Implementation
-
-class TestUser:AuthControllerUser {
-
-	var isProfileComplete: Bool = false
-
-	var id: String = "test"
-
-	var isBanned: Bool = false
-
-	func completeProfile() {
-		isProfileComplete = true
-	}
-}

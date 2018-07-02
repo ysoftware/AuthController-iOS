@@ -10,25 +10,33 @@ import CoreLocation
 
 /// Когда пользователь входит в систему, класс сетевого протокола
 /// должен вызвать onAuthStateChanged(_:) после того как данные пользователя готовы.
-public protocol AuthNetworking {
+public class AuthNetworking<U:AuthControllerUser> {
 
-	var userId: String? { get }
+	func getUser() -> U? {
+		fatalError("override")
+	}
 
-	func observeUser(id:String, _ block: @escaping (AuthControllerUser?)->Void) -> UserObserver
+	func observeUser(id:String, _ block: @escaping (U?)->Void) -> UserObserver {
+		fatalError("override")
+	}
 
-	func onAuthStateChanged(_ block: @escaping ()->Void)
+	func onAuthStateChanged(_ block: @escaping ()->Void) {
+		fatalError("override")
+	}
 
-	func updateLocation(_ location:CLLocation)
+	func signOut() {
+		fatalError("override")
+	}
 
-	func updateVersionCode()
+	func updateLocation(_ location:CLLocation) {}
 
-	func updateLastSeen()
+	func updateVersionCode() {}
 
-	func updateToken()
+	func updateLastSeen() {}
 
-	func removeToken()
+	func updateToken() {}
 
-	func signOut()
+	func removeToken() {}
 }
 
 public protocol UserObserver {
@@ -38,60 +46,74 @@ public protocol UserObserver {
 
 // MARK: - Test Implementation
 
+class TestUser:AuthControllerUser {
+
+	var isProfileComplete: Bool = false
+
+	var id: String = "test"
+
+	var isBanned: Bool = false
+
+	func completeProfile() {
+		isProfileComplete = true
+	}
+}
+
 struct TestUserObserver: UserObserver {
 
 	func remove() {
 	}
 }
 
-class TestNetworking: AuthNetworking {
+class TestNetworking: AuthNetworking<TestUser> {
 
 	// MARK: - Test code
 
 	var shouldLogIn:Bool = true
-
-	var observeBlock:((AuthControllerUser?)->Void)?
+	var user:TestUser?
+	var observeBlock:((TestUser?)->Void)?
 	var authStateChangeBlock:(()->Void)?
 
 	func signIn() {
-		let user = shouldLogIn ? TestUser() : nil
-		userId = user?.id
+		user = shouldLogIn ? TestUser() : nil
 		authStateChangeBlock?()
 		observeBlock?(user)
 	}
 
 	// MARK: - Fake networking
 
-	var userId: String?
-
-	func observeUser(id: String,
-					 _ block: @escaping (AuthControllerUser?)->Void) -> UserObserver {
+	override func observeUser(id: String,
+					 _ block: @escaping (TestUser?)->Void) -> UserObserver {
 		observeBlock = block
 		return TestUserObserver()
 	}
 
-	func onAuthStateChanged(_ block: @escaping ()->Void) {
+	override func getUser() -> TestUser? {
+		return user
+	}
+
+	override func onAuthStateChanged(_ block: @escaping ()->Void) {
 		authStateChangeBlock = block
 	}
 
-	func signOut() {
-		userId = nil
+	override func signOut() {
+		user = nil
 	}
 
 	// MARK: - Other
 
-	func updateLocation(_ location: CLLocation) {
+	override func updateLocation(_ location: CLLocation) {
 	}
 
-	func updateVersionCode() {
+	override func updateVersionCode() {
 	}
 
-	func updateLastSeen() {
+	override func updateLastSeen() {
 	}
 
-	func updateToken() {
+	override func updateToken() {
 	}
 
-	func removeToken() {
+	override func removeToken() {
 	}
 }

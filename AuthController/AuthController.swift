@@ -12,24 +12,7 @@ import Foundation
 /// и следит за его статусом.
 /// Автоматически открывает окно логина/заполнения необходимой информации
 /// о пользователя по необходимости.
-///
-/// **Примеры использования**
-/// ```
-/// Получение текущего пользователя
-/// guard let user = AuthController.shared.user else { return }
-///
-/// Выход из системы
-/// AuthController.shared.signOut()
-/// ```
-///
-/// - important: `AuthController` - синглтон. Доступ к нему происходит только через `shared`.
-/// Точка входа для настройки - `AppDelegate.configure(...)`
-final public class AuthController {
-
-	/// Получение основного объекта `AuthController`.
-	public static let shared = AuthController()
-
-    // MARK: - Properties
+final public class AuthController<U:AuthControllerUser> {
 
 	/// Объект конфигурации.
 	private var configuration = Configuration()
@@ -39,7 +22,7 @@ final public class AuthController {
 	private var analyticsService:AuthControllerAnalytics?
 	private var loginPresenter:AuthControllerLoginPresenter!
 	private var editProfilePresenter:EditProfilePresenter!
-	private var networkService:AuthNetworking!
+	private var networkService:AuthNetworking<U>!
 	private var settingsService:SettingsService!
 
     /// Таймер для периодического обновления данных о пользователе.
@@ -51,28 +34,28 @@ final public class AuthController {
 
 	///	Объект текущего пользователя.
 	/// - important: Может быть `nil` при отсутствии и вплоть до завершения процесса логина.
-	public private(set) var user:AuthControllerUser?
+	public private(set) var user:U?
     
     // MARK: - Methods
 
 	/// Основная инициализация с указанием настроек и объектов конфигурации.
-	public static func configure(with configuration:Configuration = .default,
-								 networkService:AuthNetworking,
-								 loginPresenter:AuthControllerLoginPresenter,
-								 editProfilePresenter: EditProfilePresenter,
-								 locationService:LocationDataSource? = nil,
-								 analyticsService:AuthControllerAnalytics? = nil,
-								 settingsService:SettingsService = DefaultSettingsService()) {
+	public func configure(configuration:Configuration = .default,
+						  networkService:AuthNetworking<U>,
+						  loginPresenter:AuthControllerLoginPresenter,
+						  editProfilePresenter: EditProfilePresenter,
+						  locationService:LocationDataSource? = nil,
+						  analyticsService:AuthControllerAnalytics? = nil,
+						  settingsService:SettingsService = DefaultSettingsService()) {
 
-		shared.configuration = configuration
-		shared.loginPresenter = loginPresenter
-		shared.editProfilePresenter = editProfilePresenter
-		shared.locationService = locationService
-		shared.networkService = networkService
-		shared.analyticsService = analyticsService
-		shared.settingsService = settingsService
-		shared.setup()
-		shared.checkLogin()
+		self.configuration = configuration
+		self.loginPresenter = loginPresenter
+		self.editProfilePresenter = editProfilePresenter
+		self.locationService = locationService
+		self.networkService = networkService
+		self.analyticsService = analyticsService
+		self.settingsService = settingsService
+		self.setup()
+		self.checkLogin()
     }
 
     /// Совершить выход пользователя из системы.
@@ -109,7 +92,7 @@ final public class AuthController {
 	/// и в соответствиями с настройками, открывается окно логина.
     @discardableResult
     public func checkLogin() -> Bool {
-        if networkService.userId == nil {
+        if networkService.getUser()?.id == nil {
             signOut()
             return false
         }
@@ -120,8 +103,6 @@ final public class AuthController {
     }
 
 	// MARK: - Private
-
-	private init() { }
 
 	private func setup() {
         startObserving()
@@ -146,7 +127,7 @@ final public class AuthController {
         }
     }
 
-	private func updateUser(_ newValue:AuthControllerUser?) {
+	private func updateUser(_ newValue:U?) {
 		guard let newValue = newValue else {
 			return signOut()
 		}
@@ -175,7 +156,7 @@ final public class AuthController {
 
     /// Начать отслеживать изменения информации юзера в базе данных.
     private func startObserving() {
-        guard let currentUserId = networkService.userId else {
+        guard let currentUserId = networkService.getUser()?.id else {
             return signOut()
         }
         if handle == nil {

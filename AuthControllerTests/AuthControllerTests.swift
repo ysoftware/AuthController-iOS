@@ -11,10 +11,11 @@ import XCTest
 
 class AuthControllerTests: XCTestCase {
 
+	let authController = AuthController<TestUser>()
 	let networkService = TestNetworking()
 
 	override func setUp() {
-		AuthController.configure(networkService: networkService,
+		authController.configure(networkService: networkService,
 								 loginPresenter: TestLoginPresenter(),
 								 editProfilePresenter: TestEditProfilePresenter(),
 								 locationService: TestLocationService(),
@@ -24,17 +25,17 @@ class AuthControllerTests: XCTestCase {
 
 	func testLogInAndOut() {
 		networkService.signIn()
-		XCTAssertTrue(AuthController.shared.isLoggedIn, "Log in fail")
+		XCTAssertTrue(authController.isLoggedIn, "Log in fail")
 
-		AuthController.shared.signOut()
-		XCTAssertFalse(AuthController.shared.isLoggedIn, "Log out fail")
+		authController.signOut()
+		XCTAssertFalse(authController.isLoggedIn, "Log out fail")
 	}
 
 	func testAuthExpired() {
 		networkService.signIn()
-		networkService.userId = nil // auth expired, api will not provide user data anymore
-		AuthController.shared.checkLogin()
-		XCTAssertFalse(AuthController.shared.isLoggedIn, "Did not sign out")
+		networkService.user = nil // auth expired, api will not provide user data anymore
+		authController.checkLogin()
+		XCTAssertFalse(authController.isLoggedIn, "Did not sign out")
 	}
 
 }

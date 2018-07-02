@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		711D3AFA20EA4D660047E766 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71FBCA1120E407CB00042F6A /* Configuration.swift */; };
 		71FBC9B220E3EE3700042F6A /* AuthController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71FBC9A820E3EE3700042F6A /* AuthController.framework */; };
 		71FBC9B720E3EE3800042F6A /* AuthControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71FBC9B620E3EE3800042F6A /* AuthControllerTests.swift */; };
 		71FBC9B920E3EE3800042F6A /* AuthController.h in Headers */ = {isa = PBXBuildFile; fileRef = 71FBC9AB20E3EE3700042F6A /* AuthController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -42,6 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		711D3AF920EA4BFC0047E766 /* AuthController.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = AuthController.podspec; sourceTree = SOURCE_ROOT; };
 		71FBC9A820E3EE3700042F6A /* AuthController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AuthController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		71FBC9AB20E3EE3700042F6A /* AuthController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AuthController.h; sourceTree = "<group>"; };
 		71FBC9AC20E3EE3700042F6A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				71FBC9D520E3EFC500042F6A /* User.swift */,
 				71FBC9AC20E3EE3700042F6A /* Info.plist */,
 				71FBC9AB20E3EE3700042F6A /* AuthController.h */,
+				711D3AF920EA4BFC0047E766 /* AuthController.podspec */,
 			);
 			path = AuthController;
 			sourceTree = "<group>";
@@ -268,6 +271,7 @@
 				71FBC9DF20E3FADF00042F6A /* LoginWindow.swift in Sources */,
 				71FBC9B720E3EE3800042F6A /* AuthControllerTests.swift in Sources */,
 				71FBC9E420E3FAE900042F6A /* User.swift in Sources */,
+				711D3AFA20EA4D660047E766 /* Configuration.swift in Sources */,
 				71FBC9E020E3FADF00042F6A /* EditProfile.swift in Sources */,
 				71FBC9E120E3FADF00042F6A /* Location.swift in Sources */,
 				71FBC9DD20E3FADF00042F6A /* AuthController.swift in Sources */,
