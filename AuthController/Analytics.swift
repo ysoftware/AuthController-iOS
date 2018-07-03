@@ -8,16 +8,7 @@
 
 import Foundation
 
-public protocol AuthControllerAnalytics {
+public class AuthControllerAnalytics<U:AuthControllerUser> {
 
-	func setUser(_ user:AuthControllerUser?)
-}
-
-// MARK: - Test Implementation
-
-struct TestAnalyticsService: AuthControllerAnalytics {
-	
-	func setUser(_ user: AuthControllerUser?) {
-		// doing nothing for now
-	}
+	func setUser(_ user:U?) {}
 }

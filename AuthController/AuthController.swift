@@ -19,7 +19,7 @@ final public class AuthController<U:AuthControllerUser> {
 
 	/// Сервисы, предоставляющие AuthController необходимый функционал.
 	private var locationService:LocationDataSource?
-	private var analyticsService:AuthControllerAnalytics?
+	private var analyticsService:AuthControllerAnalytics<U>?
 	private var loginPresenter:AuthControllerLoginPresenter!
 	private var editProfilePresenter:EditProfilePresenter!
 	private var networkService:AuthNetworking<U>!
@@ -39,12 +39,20 @@ final public class AuthController<U:AuthControllerUser> {
     // MARK: - Methods
 
 	/// Основная инициализация с указанием настроек и объектов конфигурации.
+	/// - Parameters:
+	///   - configuration: Объект конфигурации.
+	///   - networkService: Сервис составления запросов к базе данных (подкласс AuthNetworking)
+	///   - loginPresenter: Презентер контроллера логина/регистрации.
+	///   - editProfilePresenter: Презентер контроллера заполнения профиля.
+	///   - locationService: Сервис, предоставляющий информацию о местоположении пользователя.
+	///   - analyticsService: Сервис для составления запросов аналитики.
+	///   - settingsService: Сервис для сохранения и получения настроек.
 	public func configure(configuration:Configuration = .default,
 						  networkService:AuthNetworking<U>,
 						  loginPresenter:AuthControllerLoginPresenter,
 						  editProfilePresenter: EditProfilePresenter,
 						  locationService:LocationDataSource? = nil,
-						  analyticsService:AuthControllerAnalytics? = nil,
+						  analyticsService:AuthControllerAnalytics<U>? = nil,
 						  settingsService:SettingsService = DefaultSettingsService()) {
 
 		self.configuration = configuration
@@ -68,11 +76,11 @@ final public class AuthController<U:AuthControllerUser> {
 		if configuration.requiresAuthentication {
         	showLogin()
 		}
-		NotificationCenter.default.post(name: .AuthControllerSignOut, object: self)
+		postNotification(.authControllerDidSignOut)
 		settingsService.clear()
     }
 
-	/// Проверить, совершена ли аутенфикация пользователя.
+	/// Произведена ли аутенфикация пользователя.
 	public var isLoggedIn:Bool {
 		return user != nil
 	}
@@ -104,29 +112,39 @@ final public class AuthController<U:AuthControllerUser> {
 
 	// MARK: - Private
 
+	/// Первоначальная инициализация.
 	private func setup() {
         startObserving()
 		networkService.onAuthStateChanged {
             self.checkLogin()
         }
-        
-        if configuration.shouldUpdateOnlineStatus {
-            onlineStatusTimer = Timer.scheduledTimer(timeInterval: 60,
-                                                     target: self,
-                                                     selector: #selector(updateUserOnline(_:)),
-                                                     userInfo: nil,
-                                                     repeats: true)
-        }
-        
-        if configuration.shouldUpdateLocation {
-            locationTimer = Timer.scheduledTimer(timeInterval: 120,
-                                                 target: self,
-                                                 selector: #selector(updateLocation(_:)),
-                                                 userInfo: nil,
-                                                 repeats: true)
-        }
+		setupTimers()
     }
 
+	/// Запустить таймеры обновления данных.
+	private func setupTimers() {
+		if configuration.shouldUpdateOnlineStatus {
+			onlineStatusTimer = Timer.scheduledTimer(
+				timeInterval: configuration.onlineStatusUpdateInterval,
+				target: self,
+				selector: #selector(updateUserOnline),
+				userInfo: nil,
+				repeats: true)
+			onlineStatusTimer?.fire()
+		}
+
+		if configuration.shouldUpdateLocation {
+			locationTimer = Timer.scheduledTimer(
+				timeInterval: configuration.locationUpdateInterval,
+				target: self,
+				selector: #selector(updateLocation),
+				userInfo: nil,
+				repeats: true)
+			locationTimer?.fire()
+		}
+	}
+
+	/// Обновить объект пользователя новыми данными.
 	private func updateUser(_ newValue:U?) {
 		guard let newValue = newValue else {
 			return signOut()
@@ -134,19 +152,17 @@ final public class AuthController<U:AuthControllerUser> {
 
 		if user != nil { // data update
 			user = newValue
-			NotificationCenter.default.post(name: .AuthControllerUpdate, object: self)
+			postNotification(.authControllerDidUpdateUserData)
 		}
 		else { // just logged in
 			user = newValue
+
 			hideLogin()
 			setupTrackingFor(user)
-
-			locationTimer?.fire()
-			onlineStatusTimer?.fire()
-			NotificationCenter.default.post(name: .AuthControllerSignIn, object: self)
-
+			setupTimers()
 			networkService.updateToken()
 			networkService.updateVersionCode()
+			postNotification(.authControllerDidSignIn)
 		}
 
 		if !newValue.isProfileComplete {
@@ -175,7 +191,8 @@ final public class AuthController<U:AuthControllerUser> {
         setupTrackingFor(nil)
     }
 
-	private func setupTrackingFor(_ user:AuthControllerUser?) {
+	/// Установить слежениее за пользователем.
+	private func setupTrackingFor(_ user:U?) {
 		analyticsService?.setUser(user)
 	}
 
@@ -195,15 +212,12 @@ final public class AuthController<U:AuthControllerUser> {
 		locationService?.requestLocation { location in
 			if let location = location {
 				self.networkService.updateLocation(location)
+				self.postNotification(.authControllerDidUpdateLocation)
 			}
 		}
     }
-}
 
-// MARK: - Уведомления
-
-extension Notification.Name {
-	public static let AuthControllerUpdate = Notification.Name("AuthControllerUpdate")
-	public static let AuthControllerSignIn = Notification.Name("AuthControllerSignIn")
-	public static let AuthControllerSignOut = Notification.Name("AuthControllerSignOut")
+	func postNotification(_ notification: Notification.Name) {
+		NotificationCenter.default.post(name: notification, object: self)
+	}
 }

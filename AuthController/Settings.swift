@@ -14,17 +14,6 @@ public protocol SettingsService {
 	var shouldAccessLocation:Bool { get }
 }
 
-// MARK: - Test Implementation
-
-class TestSettingsService: SettingsService {
-
-	var shouldAccessLocation: Bool = true
-
-	func clear() {
-		shouldAccessLocation = true
-	}
-}
-
 // MARK: - Default Implementation
 
 public struct DefaultSettingsService: SettingsService {
@@ -42,17 +31,17 @@ public struct DefaultSettingsService: SettingsService {
 	// MARK: - Location
 
 	public var shouldAccessLocation:Bool {
-		return defaults.value(forKey: Keys.shouldUseLocation) as? Bool ?? true
+		return defaults.value(forKey: Keys.shouldAccessLocation) as? Bool ?? true
 	}
 
 	func set(shouldUseLocation location:Bool) {
-		defaults.set(location, forKey: Keys.shouldUseLocation)
+		defaults.set(location, forKey: Keys.shouldAccessLocation)
 	}
 }
 
 extension DefaultSettingsService {
 	
 	struct Keys {
-		static let shouldUseLocation = "shouldUseLocation"
+		static let shouldAccessLocation = "ShouldAccessLocation"
 	}
 }

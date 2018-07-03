@@ -8,9 +8,20 @@
 
 import Foundation
 
+// MARK: - Уведомления
+
+extension Notification.Name {
+
+	public static let authControllerDidUpdateUserData = Notification.Name("AuthControllerUser")
+	public static let authControllerDidSignIn = Notification.Name("AuthControllerSignIn")
+	public static let authControllerDidSignOut = Notification.Name("AuthControllerSignOut")
+	public static let authControllerDidUpdateLocation = Notification.Name("AuthControllerLocation")
+}
+
 // MARK: - Настройки аутенфикации для приложения
 
-public class Configuration {
+public struct Configuration {
+
 	public init() { }
 
 	public static var `default`:Configuration = .init()
@@ -23,4 +34,10 @@ public class Configuration {
 
 	/// Требуется ли автоматически обновлять местоположение пользователя.
 	public var requiresAuthentication = true
+
+	/// Интервал времени в секундах между отправкой обновлений локации пользователя.
+	public var locationUpdateInterval:TimeInterval = 120
+
+	/// Интервал времени в секундах между отправкой обновлений о состоянии онлайн пользователя.
+	public var onlineStatusUpdateInterval:TimeInterval = 60
 }

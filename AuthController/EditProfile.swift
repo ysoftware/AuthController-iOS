@@ -12,26 +12,3 @@ public protocol EditProfilePresenter {
 	
 	func present()->Void
 }
-
-// MARK: - Test Implementation
-
-struct TestEditProfilePresenter: EditProfilePresenter {
-
-	func present() {
-	}
-}
-
-// MARK: - Default Implementation with block (can also be used in Unit Tests)
-
-public struct DefaultEditProfilePresenter: EditProfilePresenter {
-
-	var block:()->Void
-
-	init(_ block: @escaping ()->Void) {
-		self.block = block
-	}
-
-	public func present() {
-		return block()
-	}
-}

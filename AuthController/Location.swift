@@ -14,14 +14,3 @@ public protocol LocationDataSource {
 	
 	func requestLocation(_ block: @escaping (CLLocation?)->Void)
 }
-
-// MARK: - Test Implementation
-
-struct TestLocationService: LocationDataSource {
-
-	var shouldReturnLocation = true
-
-	func requestLocation(_ block: @escaping (CLLocation?) -> Void) {
-		block(shouldReturnLocation ? CLLocation(latitude: 55, longitude: 55) : nil)
-	}
-}

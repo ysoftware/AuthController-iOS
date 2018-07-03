@@ -13,19 +13,19 @@ import CoreLocation
 public class AuthNetworking<U:AuthControllerUser> {
 
 	func getUser() -> U? {
-		fatalError("override")
+		fatalError("override getUser()")
 	}
 
 	func observeUser(id:String, _ block: @escaping (U?)->Void) -> UserObserver {
-		fatalError("override")
+		fatalError("override observeUser(id:_:")
 	}
 
 	func onAuthStateChanged(_ block: @escaping ()->Void) {
-		fatalError("override")
+		fatalError("override onAuthStateChanged(_:)")
 	}
 
 	func signOut() {
-		fatalError("override")
+		fatalError("override signOut()")
 	}
 
 	func updateLocation(_ location:CLLocation) {}
@@ -42,78 +42,4 @@ public class AuthNetworking<U:AuthControllerUser> {
 public protocol UserObserver {
 	
 	func remove()
-}
-
-// MARK: - Test Implementation
-
-class TestUser:AuthControllerUser {
-
-	var isProfileComplete: Bool = false
-
-	var id: String = "test"
-
-	var isBanned: Bool = false
-
-	func completeProfile() {
-		isProfileComplete = true
-	}
-}
-
-struct TestUserObserver: UserObserver {
-
-	func remove() {
-	}
-}
-
-class TestNetworking: AuthNetworking<TestUser> {
-
-	// MARK: - Test code
-
-	var shouldLogIn:Bool = true
-	var user:TestUser?
-	var observeBlock:((TestUser?)->Void)?
-	var authStateChangeBlock:(()->Void)?
-
-	func signIn() {
-		user = shouldLogIn ? TestUser() : nil
-		authStateChangeBlock?()
-		observeBlock?(user)
-	}
-
-	// MARK: - Fake networking
-
-	override func observeUser(id: String,
-					 _ block: @escaping (TestUser?)->Void) -> UserObserver {
-		observeBlock = block
-		return TestUserObserver()
-	}
-
-	override func getUser() -> TestUser? {
-		return user
-	}
-
-	override func onAuthStateChanged(_ block: @escaping ()->Void) {
-		authStateChangeBlock = block
-	}
-
-	override func signOut() {
-		user = nil
-	}
-
-	// MARK: - Other
-
-	override func updateLocation(_ location: CLLocation) {
-	}
-
-	override func updateVersionCode() {
-	}
-
-	override func updateLastSeen() {
-	}
-
-	override func updateToken() {
-	}
-
-	override func removeToken() {
-	}
 }
