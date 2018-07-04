@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol EditProfilePresenter {
+public protocol AuthEditProfile {
 	
 	func present()->Void
 }

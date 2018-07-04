@@ -10,7 +10,7 @@
 
 import CoreLocation
 
-public protocol LocationDataSource {
+public protocol AuthLocation {
 	
 	func requestLocation(_ block: @escaping (CLLocation?)->Void)
 }

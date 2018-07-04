@@ -30,6 +30,19 @@ struct TestUserObserver: UserObserver {
 	}
 }
 
+class TestLoginPresenter: AuthLogin {
+
+	var isShowingLogin: Bool = false
+
+	func showLogin() {
+		isShowingLogin = true
+	}
+
+	func hideLogin() {
+		isShowingLogin = false
+	}
+}
+
 class TestNetworking: AuthNetworking<TestUser> {
 
 	// MARK: - Test code
@@ -100,7 +113,7 @@ class TestNetworking: AuthNetworking<TestUser> {
 
 // MARK: - Edit Profile
 
-class TestEditProfilePresenter: EditProfilePresenter {
+class TestEditProfilePresenter: AuthEditProfile {
 
 	var didPresent = false
 
@@ -111,7 +124,7 @@ class TestEditProfilePresenter: EditProfilePresenter {
 
 // MARK: - Default Implementation with block (can also be used in Unit Tests)
 
-public struct DefaultEditProfilePresenter: EditProfilePresenter {
+public struct DefaultEditProfilePresenter: AuthEditProfile {
 
 	var block:()->Void
 
@@ -126,7 +139,7 @@ public struct DefaultEditProfilePresenter: EditProfilePresenter {
 
 // MARK: - Location
 
-struct TestLocationService: LocationDataSource {
+struct TestLocationService: AuthLocation {
 
 	var shouldReturnLocation = true
 
@@ -137,7 +150,7 @@ struct TestLocationService: LocationDataSource {
 
 // MARK: - Analytics
 
-class TestAnalyticsService: AuthControllerAnalytics<TestUser> {
+class TestAnalyticsService: AuthAnalytics<TestUser> {
 
 	override func setUser(_ user: TestUser?) {
 		// doing nothing for now
@@ -146,7 +159,7 @@ class TestAnalyticsService: AuthControllerAnalytics<TestUser> {
 
 // MARK: - Settings
 
-class TestSettingsService: SettingsService {
+class TestSettingsService: AuthSettings {
 
 	var shouldAccessLocation: Bool = true
 

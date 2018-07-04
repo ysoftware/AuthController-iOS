@@ -18,12 +18,12 @@ final public class AuthController<U:AuthControllerUser> {
 	private var configuration = Configuration()
 
 	/// Сервисы, предоставляющие AuthController необходимый функционал.
-	private var locationService:LocationDataSource?
-	private var analyticsService:AuthControllerAnalytics<U>?
-	private var loginPresenter:AuthControllerLoginPresenter!
-	private var editProfilePresenter:EditProfilePresenter!
+	private var locationService:AuthLocation?
+	private var analyticsService:AuthAnalytics<U>?
+	private var loginPresenter:AuthLogin!
+	private var editProfilePresenter:AuthEditProfile!
 	private var networkService:AuthNetworking<U>!
-	private var settingsService:SettingsService!
+	private var settingsService:AuthSettings!
 
     /// Таймер для периодического обновления данных о пользователе.
     private var onlineStatusTimer:Timer?
@@ -49,11 +49,11 @@ final public class AuthController<U:AuthControllerUser> {
 	///   - settingsService: Сервис для сохранения и получения настроек.
 	public func configure(configuration:Configuration = .default,
 						  networkService:AuthNetworking<U>,
-						  loginPresenter:AuthControllerLoginPresenter,
-						  editProfilePresenter: EditProfilePresenter,
-						  locationService:LocationDataSource? = nil,
-						  analyticsService:AuthControllerAnalytics<U>? = nil,
-						  settingsService:SettingsService = DefaultSettingsService()) {
+						  loginPresenter:AuthLogin,
+						  editProfilePresenter: AuthEditProfile,
+						  locationService:AuthLocation? = nil,
+						  analyticsService:AuthAnalytics<U>? = nil,
+						  settingsService:AuthSettings = DefaultSettingsService()) {
 
 		self.configuration = configuration
 		self.loginPresenter = loginPresenter

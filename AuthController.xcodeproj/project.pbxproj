@@ -14,7 +14,7 @@
 		71FBC9C720E3EE8B00042F6A /* AuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71FBC9C220E3EE8A00042F6A /* AuthController.swift */; };
 		71FBC9C820E3EE8B00042F6A /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71FBC9C320E3EE8A00042F6A /* Networking.swift */; };
 		71FBC9C920E3EE8B00042F6A /* EditProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71FBC9C420E3EE8A00042F6A /* EditProfile.swift */; };
-		71FBC9CA20E3EE8B00042F6A /* LoginWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71FBC9C520E3EE8B00042F6A /* LoginWindow.swift */; };
+		71FBC9CA20E3EE8B00042F6A /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71FBC9C520E3EE8B00042F6A /* Login.swift */; };
 		71FBC9CB20E3EE8B00042F6A /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71FBC9C620E3EE8B00042F6A /* Location.swift */; };
 		71FBC9CE20E3EE9800042F6A /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71FBC9CD20E3EE9800042F6A /* CoreLocation.framework */; };
 		71FBC9D020E3EE9C00042F6A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71FBC9CF20E3EE9C00042F6A /* UIKit.framework */; };
@@ -46,7 +46,7 @@
 		71FBC9C220E3EE8A00042F6A /* AuthController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthController.swift; sourceTree = "<group>"; };
 		71FBC9C320E3EE8A00042F6A /* Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		71FBC9C420E3EE8A00042F6A /* EditProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfile.swift; sourceTree = "<group>"; };
-		71FBC9C520E3EE8B00042F6A /* LoginWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginWindow.swift; sourceTree = "<group>"; };
+		71FBC9C520E3EE8B00042F6A /* Login.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		71FBC9C620E3EE8B00042F6A /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		71FBC9CD20E3EE9800042F6A /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		71FBC9CF20E3EE9C00042F6A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -103,7 +103,7 @@
 				71FBCA1120E407CB00042F6A /* Configuration.swift */,
 				71FBC9C320E3EE8A00042F6A /* Networking.swift */,
 				71FBC9DB20E3F79A00042F6A /* Analytics.swift */,
-				71FBC9C520E3EE8B00042F6A /* LoginWindow.swift */,
+				71FBC9C520E3EE8B00042F6A /* Login.swift */,
 				71FBC9C420E3EE8A00042F6A /* EditProfile.swift */,
 				71FBC9C620E3EE8B00042F6A /* Location.swift */,
 				71FBC9D720E3F3D400042F6A /* Settings.swift */,
@@ -250,7 +250,7 @@
 				71FBC9D820E3F3D400042F6A /* Settings.swift in Sources */,
 				71FBC9C920E3EE8B00042F6A /* EditProfile.swift in Sources */,
 				71FBC9C820E3EE8B00042F6A /* Networking.swift in Sources */,
-				71FBC9CA20E3EE8B00042F6A /* LoginWindow.swift in Sources */,
+				71FBC9CA20E3EE8B00042F6A /* Login.swift in Sources */,
 				71FBC9D620E3EFC500042F6A /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

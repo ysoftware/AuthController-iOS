@@ -8,15 +8,16 @@
 
 import Foundation
 
-public protocol SettingsService {
+public protocol AuthSettings {
 
 	func clear()
+	
 	var shouldAccessLocation:Bool { get }
 }
 
 // MARK: - Default Implementation
 
-public struct DefaultSettingsService: SettingsService {
+public struct DefaultSettingsService: AuthSettings {
 
 	public init() { }
 	

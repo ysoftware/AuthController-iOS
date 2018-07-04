@@ -8,31 +8,18 @@
 
 import UIKit
 
-public protocol AuthControllerLoginPresenter {
+public protocol AuthLogin {
 
 	func showLogin()
+
 	func hideLogin()
+	
 	var isShowingLogin:Bool { get }
-}
-
-// MARK: - Test Implementation
-
-class TestLoginPresenter: AuthControllerLoginPresenter {
-
-	var isShowingLogin: Bool = false
-
-	func showLogin() {
-		isShowingLogin = true
-	}
-
-	func hideLogin() {
-		isShowingLogin = false
-	}
 }
 
 // MARK: - Default Windowed Implementation
 
-public struct WindowLoginPresenter:AuthControllerLoginPresenter {
+public struct WindowLoginPresenter:AuthLogin {
 
 	var block:()->UIViewController
 
