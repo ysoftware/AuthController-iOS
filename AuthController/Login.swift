@@ -19,14 +19,14 @@ public protocol AuthLogin {
 
 // MARK: - Default Windowed Implementation
 
-public struct WindowLoginPresenter:AuthLogin {
+public struct WindowLoginPresenter: AuthLogin {
 
 	var block:()->UIViewController
 
 	weak var mainWindow: UIWindow!
 	var loginWindow: UIWindow!
 
-	init(_ block: @escaping ()->UIViewController) {
+	public init(_ block: @escaping ()->UIViewController) {
 		mainWindow = UIApplication.shared.windows.first
 		loginWindow = UIWindow(frame: UIScreen.main.bounds)
 		self.block = block

@@ -10,33 +10,35 @@ import CoreLocation
 
 /// Когда пользователь входит в систему, класс сетевого протокола
 /// должен вызвать onAuthStateChanged(_:) после того как данные пользователя готовы.
-public class AuthNetworking<U:AuthControllerUser> {
+open class AuthNetworking<U:AuthControllerUser> where U:Codable {
 
-	func getUser() -> U? {
-		fatalError("override getUser()")
+	public init() {}
+
+	open func getUserId() -> String? {
+		fatalError("override getUserId()")
 	}
 
-	func observeUser(id:String, _ block: @escaping (U?)->Void) -> UserObserver {
+	open func observeUser(id:String, _ block: @escaping (U?)->Void) -> UserObserver {
 		fatalError("override observeUser(id:_:")
 	}
 
-	func onAuthStateChanged(_ block: @escaping ()->Void) {
+	open func onAuthStateChanged(_ block: @escaping ()->Void) {
 		fatalError("override onAuthStateChanged(_:)")
 	}
 
-	func signOut() {
+	open func signOut() {
 		fatalError("override signOut()")
 	}
 
-	func updateLocation(_ location:CLLocation) {}
+	open func updateLocation(_ location:CLLocation) {}
 
-	func updateVersionCode() {}
+	open func updateVersionCode() {}
 
-	func updateLastSeen() {}
+	open func updateLastSeen() {}
 
-	func updateToken() {}
+	open func updateToken() {}
 
-	func removeToken() {}
+	open func removeToken() {}
 }
 
 public protocol UserObserver {

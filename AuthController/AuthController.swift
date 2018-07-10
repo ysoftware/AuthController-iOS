@@ -12,7 +12,10 @@ import Foundation
 /// и следит за его статусом.
 /// Автоматически открывает окно логина/заполнения необходимой информации
 /// о пользователя по необходимости.
-final public class AuthController<U:AuthControllerUser> {
+final public class AuthController<U:AuthControllerUser> where U:Codable {
+
+	/// Публичный инициализатор.
+	public init() {}
 
 	/// Объект конфигурации.
 	private var configuration = Configuration()
@@ -35,6 +38,12 @@ final public class AuthController<U:AuthControllerUser> {
 	///	Объект текущего пользователя.
 	/// - important: Может быть `nil` при отсутствии и вплоть до завершения процесса логина.
 	public private(set) var user:U?
+
+	/// Получить id текущего пользователя из сетевого слоя.
+	/// Может быть доступен раньше, чем сам объект пользователя.
+	public var userId:String? {
+		return networkService.getUserId()
+	}
     
     // MARK: - Methods
 
@@ -88,11 +97,13 @@ final public class AuthController<U:AuthControllerUser> {
 	/// Показать окно логина.
 	public func showLogin() {
 		loginPresenter.showLogin()
+		postNotification(.authControllerDidShowLogin)
 	}
 
 	/// Показать основное окно приложения.
 	public func hideLogin() {
 		loginPresenter.hideLogin()
+		postNotification(.authControllerDidHideLogin)
 	}
 
 	/// Выполнить проверку на наличии аутенфикации.
@@ -100,7 +111,7 @@ final public class AuthController<U:AuthControllerUser> {
 	/// и в соответствиями с настройками, открывается окно логина.
     @discardableResult
     public func checkLogin() -> Bool {
-        if networkService.getUser()?.id == nil {
+        if networkService.getUserId() == nil {
             signOut()
             return false
         }
@@ -172,7 +183,7 @@ final public class AuthController<U:AuthControllerUser> {
 
     /// Начать отслеживать изменения информации юзера в базе данных.
     private func startObserving() {
-        guard let currentUserId = networkService.getUser()?.id else {
+        guard let currentUserId = networkService.getUserId() else {
             return signOut()
         }
         if handle == nil {

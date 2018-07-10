@@ -17,8 +17,12 @@ extension Notification.Name {
 	public static let authControllerDidSignIn = Notification.Name("AuthControllerSignIn")
 
 	public static let authControllerDidSignOut = Notification.Name("AuthControllerSignOut")
-	
+
 	public static let authControllerDidUpdateLocation = Notification.Name("AuthControllerLocation")
+
+	public static let authControllerDidShowLogin = Notification.Name("AuthControllerDidShowLogin")
+
+	public static let authControllerDidHideLogin = Notification.Name("AuthControllerDidHideLogin")
 }
 
 // MARK: - Настройки аутенфикации для приложения
