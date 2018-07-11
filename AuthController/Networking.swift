@@ -10,7 +10,7 @@ import CoreLocation
 
 /// Когда пользователь входит в систему, класс сетевого протокола
 /// должен вызвать onAuthStateChanged(_:) после того как данные пользователя готовы.
-open class AuthNetworking<U:AuthControllerUser> where U:Codable {
+open class AuthNetworking<U:AuthControllerUser> {
 
 	public init() {}
 

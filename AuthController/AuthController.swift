@@ -12,7 +12,7 @@ import Foundation
 /// и следит за его статусом.
 /// Автоматически открывает окно логина/заполнения необходимой информации
 /// о пользователя по необходимости.
-final public class AuthController<U:AuthControllerUser> where U:Codable {
+final public class AuthController<U:AuthControllerUser> {
 
 	/// Публичный инициализатор.
 	public init() {}
