@@ -194,8 +194,8 @@ final public class AuthController<U:AuthControllerUser> {
     /// Прекратить отслеживать изменения информации юзера в базе данных.
     private func stopObserving() {
         handle?.remove()
+		handle = nil
         user = nil
-        handle = nil
         
         onlineStatusTimer?.invalidate()
         locationTimer?.invalidate()

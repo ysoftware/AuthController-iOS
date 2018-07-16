@@ -15,7 +15,7 @@ open class AuthNetworking<U:AuthControllerUser> {
 	public init() {}
 
 	open func getUserId() -> String? {
-		fatalError("override getUserId()")
+		fatalError("override AuthNetworking.getUserId()")
 	}
 
 	open func observeUser(id:String, _ block: @escaping (U?)->Void) -> UserObserver {

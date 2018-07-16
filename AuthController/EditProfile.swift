@@ -10,5 +10,5 @@ import Foundation
 
 public protocol AuthEditProfile {
 	
-	func present()->Void
+	func present()
 }

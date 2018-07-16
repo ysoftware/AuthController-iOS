@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class AuthAnalytics<U:AuthControllerUser> {
+open class AuthAnalytics<U:AuthControllerUser> {
 
 	func setUser(_ user:U?) {}
 }
