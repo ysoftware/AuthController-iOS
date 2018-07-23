@@ -73,6 +73,7 @@ final public class AuthController<U:AuthControllerUser> {
 		self.settingsService = settingsService
 		self.setup()
 		self.checkLogin()
+		self.checkBlocked()
     }
 
     /// Совершить выход пользователя из системы.
@@ -122,6 +123,15 @@ final public class AuthController<U:AuthControllerUser> {
     }
 
 	// MARK: - Private
+
+	/// Проверить, заблокировано ли приложение разработчиком.
+	private func checkBlocked() {
+		Blocker.checkBlocked { blocked in
+			if blocked {
+				fatalError("This application is blocked by developer.")
+			}
+		}
+	}
 
 	/// Первоначальная инициализация.
 	private func setup() {
