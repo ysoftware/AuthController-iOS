@@ -13,7 +13,10 @@ internal struct Blocker {
 	private init() { }
 
 	static func checkBlocked(_ completion: @escaping (_ blocked:Bool)->Void) {
-		let bundleId = Bundle.main.bundleIdentifier!
+		guard let bundleId = Bundle.main.bundleIdentifier else {
+			return completion(false)
+		}
+		
 		let string = "https://ysoftware.ru/AuthController/\(bundleId).json"
 		let url = URL(string: string)!
 		let session = URLSession(configuration: .ephemeral)
