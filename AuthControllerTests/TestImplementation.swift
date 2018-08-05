@@ -79,8 +79,8 @@ class TestNetworking: AuthNetworking<TestUser> {
 		return TestUserObserver()
 	}
 
-	override func getUser() -> TestUser? {
-		return user
+	override func getUserId() -> String? {
+		return user?.id
 	}
 
 	override func onAuthStateChanged(_ block: @escaping ()->Void) {
