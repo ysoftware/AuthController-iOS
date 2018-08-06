@@ -1,5 +1,5 @@
 //
-//  DefaultSettingsService.swift
+//  UserDefaultsSettingsService.swift
 //  AuthController
 //
 //  Created by ysoftware on 06.08.2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-public struct DefaultSettingsService: AuthSettings {
+public struct UserDefaultsSettingsService: AuthSettings {
 
 	public init(userDefaults:UserDefaults = .standard) {
 		defaults = userDefaults
@@ -17,8 +17,7 @@ public struct DefaultSettingsService: AuthSettings {
 	private let defaults:UserDefaults
 
 	public func clear() {
-		let domain = Bundle.main.bundleIdentifier!
-		defaults.removePersistentDomain(forName: domain)
+		defaults.removeObject(forKey: Keys.shouldAccessLocation)
 		defaults.synchronize()
 	}
 
@@ -26,12 +25,12 @@ public struct DefaultSettingsService: AuthSettings {
 		return defaults.value(forKey: Keys.shouldAccessLocation) as? Bool ?? true
 	}
 
-	func set(shouldUseLocation location:Bool) {
+	public func set(shouldAccessLocation location:Bool) {
 		defaults.set(location, forKey: Keys.shouldAccessLocation)
 	}
 }
 
-extension DefaultSettingsService {
+extension UserDefaultsSettingsService {
 
 	struct Keys {
 

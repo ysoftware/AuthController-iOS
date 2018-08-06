@@ -9,8 +9,10 @@
 /* Begin PBXBuildFile section */
 		711E872920EBABA500C5D379 /* TestImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711E872820EBABA500C5D379 /* TestImplementation.swift */; };
 		7134DC6821187F430060B246 /* WindowLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7134DC6721187F430060B246 /* WindowLogin.swift */; };
-		7134DC6A21187F970060B246 /* DefaultSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7134DC6921187F970060B246 /* DefaultSettings.swift */; };
+		7134DC6A21187F970060B246 /* UserDefaultsSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7134DC6921187F970060B246 /* UserDefaultsSettings.swift */; };
 		7134DC6C2118811E0060B246 /* ModalLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7134DC6B2118811E0060B246 /* ModalLogin.swift */; };
+		7134DC6E21188F630060B246 /* UserDefaultsSettingsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7134DC6D21188F630060B246 /* UserDefaultsSettingsTest.swift */; };
+		7134DC70211895460060B246 /* AuthControllerOtherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7134DC6F211895460060B246 /* AuthControllerOtherTests.swift */; };
 		719175C0210499B400D8F4EB /* Blocker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719175BF210499B400D8F4EB /* Blocker.swift */; };
 		71D7497720FACE5B00EA1D2F /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D7497620FACE5B00EA1D2F /* Notifications.swift */; };
 		71FBC9B220E3EE3700042F6A /* AuthController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71FBC9A820E3EE3700042F6A /* AuthController.framework */; };
@@ -42,8 +44,10 @@
 /* Begin PBXFileReference section */
 		711E872820EBABA500C5D379 /* TestImplementation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestImplementation.swift; sourceTree = "<group>"; };
 		7134DC6721187F430060B246 /* WindowLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowLogin.swift; sourceTree = "<group>"; };
-		7134DC6921187F970060B246 /* DefaultSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSettings.swift; sourceTree = "<group>"; };
+		7134DC6921187F970060B246 /* UserDefaultsSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsSettings.swift; sourceTree = "<group>"; };
 		7134DC6B2118811E0060B246 /* ModalLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalLogin.swift; sourceTree = "<group>"; };
+		7134DC6D21188F630060B246 /* UserDefaultsSettingsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsSettingsTest.swift; sourceTree = "<group>"; };
+		7134DC6F211895460060B246 /* AuthControllerOtherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthControllerOtherTests.swift; sourceTree = "<group>"; };
 		719175BF210499B400D8F4EB /* Blocker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Blocker.swift; sourceTree = "<group>"; };
 		71D7497620FACE5B00EA1D2F /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		71FBC9A820E3EE3700042F6A /* AuthController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AuthController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -91,8 +95,8 @@
 			children = (
 				719175BF210499B400D8F4EB /* Blocker.swift */,
 				7134DC6721187F430060B246 /* WindowLogin.swift */,
-				7134DC6921187F970060B246 /* DefaultSettings.swift */,
 				7134DC6B2118811E0060B246 /* ModalLogin.swift */,
+				7134DC6921187F970060B246 /* UserDefaultsSettings.swift */,
 			);
 			path = "Default Services";
 			sourceTree = "<group>";
@@ -157,6 +161,8 @@
 			children = (
 				711E872820EBABA500C5D379 /* TestImplementation.swift */,
 				71FBC9B620E3EE3800042F6A /* AuthControllerTests.swift */,
+				7134DC6F211895460060B246 /* AuthControllerOtherTests.swift */,
+				7134DC6D21188F630060B246 /* UserDefaultsSettingsTest.swift */,
 				71FBC9B820E3EE3800042F6A /* Info.plist */,
 			);
 			path = AuthControllerTests;
@@ -284,7 +290,7 @@
 				71FBC9CB20E3EE8B00042F6A /* Location.swift in Sources */,
 				71FBC9DC20E3F79A00042F6A /* Analytics.swift in Sources */,
 				71FBC9C720E3EE8B00042F6A /* AuthController.swift in Sources */,
-				7134DC6A21187F970060B246 /* DefaultSettings.swift in Sources */,
+				7134DC6A21187F970060B246 /* UserDefaultsSettings.swift in Sources */,
 				7134DC6821187F430060B246 /* WindowLogin.swift in Sources */,
 				71FBCA1220E407CB00042F6A /* Configuration.swift in Sources */,
 				7134DC6C2118811E0060B246 /* ModalLogin.swift in Sources */,
@@ -301,7 +307,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7134DC70211895460060B246 /* AuthControllerOtherTests.swift in Sources */,
 				71FBC9B720E3EE3800042F6A /* AuthControllerTests.swift in Sources */,
+				7134DC6E21188F630060B246 /* UserDefaultsSettingsTest.swift in Sources */,
 				711E872920EBABA500C5D379 /* TestImplementation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

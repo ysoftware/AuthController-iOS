@@ -9,7 +9,7 @@
 import XCTest
 @testable import AuthController
 
-class AuthControllerTests: XCTestCase {
+final class AuthControllerTests: XCTestCase {
 
 	let authController = AuthController<TestUser>()
 	let networkService = TestNetworking()
@@ -37,9 +37,12 @@ class AuthControllerTests: XCTestCase {
 	func testLogInAndOut() {
 		networkService.signIn()
 		XCTAssertTrue(authController.isLoggedIn, "Log in fail")
+		XCTAssertNotNil(authController.userId)
+		XCTAssertTrue(authController.checkLogin())
 
 		authController.signOut()
 		XCTAssertFalse(authController.isLoggedIn, "Log out fail")
+		XCTAssertNil(authController.userId)
 	}
 
 	func testUserFail() {
@@ -48,6 +51,7 @@ class AuthControllerTests: XCTestCase {
 		networkService.fail()
 		// check if signed out
 		XCTAssertFalse(authController.isLoggedIn, "Did not sign out")
+		XCTAssertNil(authController.userId)
 	}
 
 	func testCheckLogin() {
@@ -55,6 +59,7 @@ class AuthControllerTests: XCTestCase {
 		networkService.user = nil // network service fail, but did not push data
 		authController.checkLogin()
 		XCTAssertFalse(authController.isLoggedIn, "Did not sign out")
+		XCTAssertNil(authController.userId)
 	}
 
 	func testEditProfileOpened() {
@@ -79,5 +84,4 @@ class AuthControllerTests: XCTestCase {
 		authController.signOut()
 		XCTAssertTrue(loginPresenter.isShowingLogin, "Login did not open")
 	}
-
 }

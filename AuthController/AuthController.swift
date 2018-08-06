@@ -70,7 +70,7 @@ final public class AuthController<U:AuthControllerUser> {
 						  editProfilePresenter: AuthEditProfile,
 						  locationService:AuthLocation? = nil,
 						  analyticsService:AuthAnalytics<U>? = nil,
-						  settingsService:AuthSettings = DefaultSettingsService()) {
+						  settingsService:AuthSettings = UserDefaultsSettingsService()) {
 
 		self.configuration = configuration
 		self.loginPresenter = loginPresenter
@@ -87,9 +87,6 @@ final public class AuthController<U:AuthControllerUser> {
     /// Совершить выход пользователя из системы.
     public func signOut() {
         stopObserving()
-		if user != nil {
-			networkService.removeToken()
-		}
         networkService.signOut()
 		if configuration.requiresAuthentication {
         	showLogin()
@@ -212,9 +209,9 @@ final public class AuthController<U:AuthControllerUser> {
     /// Прекратить отслеживать изменения информации юзера в базе данных.
     private func stopObserving() {
         handle?.remove()
+		networkService.removeToken()
 		handle = nil
         user = nil
-        
         onlineStatusTimer?.invalidate()
         locationTimer?.invalidate()
         setupTrackingFor(nil)
