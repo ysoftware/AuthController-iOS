@@ -14,35 +14,3 @@ public protocol AuthSettings {
 	
 	var shouldAccessLocation:Bool { get }
 }
-
-// MARK: - Default Implementation
-
-public struct DefaultSettingsService: AuthSettings {
-
-	public init() { }
-	
-	let defaults:UserDefaults = .standard
-
-	public func clear() {
-		let domain = Bundle.main.bundleIdentifier!
-		defaults.removePersistentDomain(forName: domain)
-		defaults.synchronize()
-	}
-
-	// MARK: - Location
-
-	public var shouldAccessLocation:Bool {
-		return defaults.value(forKey: Keys.shouldAccessLocation) as? Bool ?? true
-	}
-
-	func set(shouldUseLocation location:Bool) {
-		defaults.set(location, forKey: Keys.shouldAccessLocation)
-	}
-}
-
-extension DefaultSettingsService {
-	
-	struct Keys {
-		static let shouldAccessLocation = "ShouldAccessLocation"
-	}
-}

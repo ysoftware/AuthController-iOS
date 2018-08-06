@@ -6,7 +6,7 @@
 //  Copyright © 2018 Eugene. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 public protocol AuthLogin {
 
@@ -15,38 +15,4 @@ public protocol AuthLogin {
 	func hideLogin()
 	
 	var isShowingLogin:Bool { get }
-}
-
-// MARK: - Default Windowed Implementation
-
-public struct WindowLoginPresenter: AuthLogin {
-
-	var block:()->UIViewController
-
-	weak var mainWindow: UIWindow!
-	var loginWindow: UIWindow!
-
-	public init(_ block: @escaping ()->UIViewController) {
-		mainWindow = UIApplication.shared.windows.first
-		loginWindow = UIWindow(frame: UIScreen.main.bounds)
-		self.block = block
-	}
-
-	public func showLogin() {
-		if !isShowingLogin {
-			loginWindow.rootViewController = block()
-			loginWindow.makeKeyAndVisible()
-		}
-	}
-
-	public func hideLogin() {
-		if isShowingLogin {
-			mainWindow.makeKeyAndVisible()
-			loginWindow.rootViewController = nil
-		}
-	}
-
-	public var isShowingLogin: Bool {
-		return loginWindow.isKeyWindow
-	}
 }
