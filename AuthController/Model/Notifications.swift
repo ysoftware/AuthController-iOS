@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Notification.Name {
+public extension Notification.Name {
 
 	public static let authControllerDidUpdateUserData = Notification.Name("AuthControllerUser")
 

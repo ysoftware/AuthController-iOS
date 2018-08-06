@@ -10,5 +10,5 @@ import Foundation
 
 open class AuthAnalytics<U:AuthControllerUser> {
 
-	func setUser(_ user:U?) {}
+	public func setUser(_ user:U?) {}
 }

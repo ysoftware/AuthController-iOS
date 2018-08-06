@@ -20,16 +20,24 @@ final public class AuthController<U:AuthControllerUser> {
 	/// Объект конфигурации.
 	private var configuration = Configuration()
 
-	/// Сервисы, предоставляющие AuthController необходимый функционал.
+	// MARK: - Сервисы, предоставляющие AuthController необходимый функционал.
+
 	private var locationService:AuthLocation?
+
 	private var analyticsService:AuthAnalytics<U>?
+
 	private var loginPresenter:AuthLogin!
+
 	private var editProfilePresenter:AuthEditProfile!
+
 	private var networkService:AuthNetworking<U>!
+
 	private var settingsService:AuthSettings!
 
-    /// Таймер для периодического обновления данных о пользователе.
+	// MARK: - Таймер для периодического обновления данных о пользователе.
+
     private var onlineStatusTimer:Timer?
+
 	private var locationTimer:Timer?
 
     /// Указатель подписки на события изменения данных пользователя в базе данных.
@@ -238,7 +246,8 @@ final public class AuthController<U:AuthControllerUser> {
 		}
     }
 
-	func postNotification(_ notification: Notification.Name) {
+	/// Отправить уведомление о действии.
+	private func postNotification(_ notification: Notification.Name) {
 		NotificationCenter.default.post(name: notification, object: self)
 	}
 }

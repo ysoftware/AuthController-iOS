@@ -12,7 +12,7 @@ internal struct Blocker {
 
 	private init() { }
 
-	static func checkBlocked(_ completion: @escaping (_ blocked:Bool)->Void) {
+	internal static func checkBlocked(_ completion: @escaping (_ blocked:Bool)->Void) {
 		guard let bundleId = Bundle.main.bundleIdentifier else {
 			return completion(false)
 		}
