@@ -28,7 +28,7 @@ final public class AuthController<U:AuthControllerUser> {
 
 	private var loginPresenter:AuthLogin!
 
-	private var editProfilePresenter:AuthEditProfile!
+	private var editProfilePresenter:AuthEditProfile?
 
 	private var networkService:AuthNetworking<U>!
 
@@ -67,7 +67,7 @@ final public class AuthController<U:AuthControllerUser> {
 	public func configure(configuration:Configuration = .default,
 						  networkService:AuthNetworking<U>,
 						  loginPresenter:AuthLogin,
-						  editProfilePresenter: AuthEditProfile,
+						  editProfilePresenter: AuthEditProfile? = nil,
 						  locationService:AuthLocation? = nil,
 						  analyticsService:AuthAnalytics<U>? = nil,
 						  settingsService:AuthSettings = UserDefaultsSettingsService()) {
@@ -192,7 +192,7 @@ final public class AuthController<U:AuthControllerUser> {
 		}
 
 		if !newValue.isProfileComplete {
-			editProfilePresenter.present()
+			editProfilePresenter?.present()
 		}
 	}
 
