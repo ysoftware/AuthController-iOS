@@ -182,6 +182,7 @@ final public class AuthController<U:AuthControllerUser> {
 		}
 		else { // just logged in
 			user = newValue
+			postNotification(.authControllerDidUpdateUserData)
 
 			hideLogin()
 			setupTrackingFor(user)
