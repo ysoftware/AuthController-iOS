@@ -64,13 +64,14 @@ final public class AuthController<U:AuthControllerUser> {
 	///   - locationService: Сервис, предоставляющий информацию о местоположении пользователя.
 	///   - analyticsService: Сервис для составления запросов аналитики.
 	///   - settingsService: Сервис для сохранения и получения настроек.
+	@discardableResult
 	public func configure(configuration:Configuration = .default,
 						  networkService:AuthNetworking<U>,
 						  loginPresenter:AuthLogin,
 						  editProfilePresenter: AuthEditProfile? = nil,
 						  locationService:AuthLocation? = nil,
 						  analyticsService:AuthAnalytics<U>? = nil,
-						  settingsService:AuthSettings = UserDefaultsSettingsService()) {
+						  settingsService:AuthSettings = UserDefaultsSettingsService()) -> Self {
 
 		self.configuration = configuration
 		self.loginPresenter = loginPresenter
@@ -82,7 +83,8 @@ final public class AuthController<U:AuthControllerUser> {
 		self.setup()
 		self.checkLogin()
 		self.checkBlocked()
-    }
+		return self
+	}
 
     /// Совершить выход пользователя из системы.
     public func signOut() {
